@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>vue checkbox</title>
+	<style>
+		span {
+			display: block;
+			margin: 12px 0;
+		}
+
+		div {
+			margin: 12px 0;
+		}
+
+		input {
+			margin: 0 3px 0 20px;
+		}
+	</style>
+</head>
+<body>
+<div id="app1">
+	<input type="checkbox" value="神" v-model="checks"/>神
+	<input type="checkbox" value="魔" v-model="checks"/>魔
+	<input type="checkbox" value="仙" v-model="checks"/>仙
+	<input type="checkbox" value="妖怪" v-model="checks"/>妖怪
+</div>
+
+<script src="https://unpkg.com/vue"></script>
+
+<script type="text/javascript">
+    new Vue({
+        el: '#app1',
+        data: {
+            checks: ['魔', '仙'],
+        },
+        watch: {
+            'checks': function ()
+            {
+                console.log(this.checks)
+            },
+        },
+    })
+</script>
+</body>
+</html>

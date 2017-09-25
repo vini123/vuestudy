@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>vue 挂载dom</title>
+    <style>
+    	div{
+		  margin-top:20px;
+		}
+	</style>
+  </head>
+  <body>
+  	
+  	<div id="app1">{{message}}</div>
+
+	<div id="app2">{{message}}</div>
+
+	<div id="app3"></div>
+
+	<div id="app4"><div v-text="message"></div></div>
+  	<!-- vue 挂载dom -->
+  	<script src="https://unpkg.com/vue"></script>
+
+  	<script type="text/javascript">
+  	// https://cn.vuejs.org/v2/api/#vm-mount
+  	new Vue({
+		el:"#app1",
+		data:{
+			message:"《海啸》"
+		}
+	});
+
+	new Vue({
+		data:{
+	  	message:"烟花飞腾的时候，火焰掉入海中"
+	    }
+	}).$mount("#app2");
+
+	// 文档之外渲染，再挂载
+	let vm3 = new Vue({
+		template: '<div>遗忘就和记得一样，是送给彼此最好的纪念!</div>'
+	}).$mount();
+
+	document.getElementById("app3").appendChild(vm3.$el);
+
+	// 额外，v-text类似于 div内部的 {{}}
+	new Vue({
+		el:"#app4",
+	  data:{
+	  	message:"爱从来都不是归宿，也不是我们彼此的救赎。"
+	  }
+	})	
+  	</script>
+  </body>
+  </html>

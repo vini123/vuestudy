@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>vue 基本用法</title>
+	<style>
+		li{
+			list-style:none;
+		}
+
+		span{
+			display:block;
+			margin:20px 0;
+		}
+	</style>
+</head>
+<body>
+
+<div id="app-2">
+  <span v-bind:title="message">
+    鼠标悬停几秒钟查看此处动态绑定的提示信息！
+  </span>
+	<span v-if="seen">{{content}}</span>
+</div>
+
+<li id='app-3'>
+	<ol v-for="value in data">
+		{{value.txt}}
+	</ol>
+</li>
+
+<div id='app-4'>
+	<p>{{message}}</p>
+	<button v-on:click="reverseMessage">逆转消息</button>
+</div>
+
+<br/>
+<div id= 'app-5'>
+	<span>{{message}}</span>
+	<input type='text' v-model="message" />
+</div>
+
+<div id='app-6'>
+	<ol>
+		<todo-item v-for="item in list" v-bind:todo='item'>
+		</todo-item>
+	</ol>
+</div>
+
+<!-- vue 基本用法 -->
+<script src="https://unpkg.com/vue"></script>
+<script>
+    var app2 = new Vue({
+        el: '#app-2',
+        data:{
+            message: '页面加载于 ' + new Date(),
+            content: '给我一个理由忘记！',
+            seen:true
+        }
+    })
+
+    setTimeout(function(){
+        app2.message = '神一样的存在！' + app2.message;
+        app2.seen = false;
+        app3.data.push({txt:'烟花飞腾的时候，火焰掉入海中。遗忘就和记得一样，是送给彼此最好的纪念。'});
+    }, 5 * 1000);
+
+    var app3= new Vue({
+        el:'#app-3',
+        data:{data:[
+            {txt:'仿佛有痛楚'},
+            {txt:'如果我晕眩'},
+            {txt:'那是因为幻觉丰盛，能量薄弱'},
+            {txt:'足以支持我对你的迷恋，不够支持我们的快乐！'}
+        ]}
+    });
+
+    var app4 = new Vue({
+        el:'#app-4',
+        data:{
+            message:'Hello, vue'
+        },
+        methods:{
+            reverseMessage:function(){
+                this.message = this.message.split('').reverse().join('');
+            }
+        }
+    });
+
+    var app5 = new Vue({
+        el:'#app-5',
+        data:{
+            message:'没有谁对不起谁'
+        }
+    });
+
+    Vue.component('todo-item', {
+        props:['todo'],
+        template: '<li>{{ todo.text }}</li>'
+    });
+
+    var app6 = new Vue({
+        el:'#app-6',
+        data:{
+            list:[
+                {'text':'海上生明月'},
+                {'text':'天涯共此时'},
+                {'text':'情人怨遥夜'},
+                {'text':'竟夕起相思'},
+                {'text':'灭烛怜光满'},
+                {'text':'披衣觉露滋'}
+            ]
+        }
+    })
+</script>
+</body>
+</html>

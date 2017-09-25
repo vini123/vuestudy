@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>vue 单选按钮</title>
+</head>
+<body>
+
+<div id="app1">
+	<input type="radio" id="A" value="A" v-model="picked"/><span>A</span>
+	<input type="radio" id="B" value="B" v-model="picked"/><span>B</span>
+
+</div>
+
+<!-- 被挂载到dom钩子。如果想整个视图都渲染完毕，请继续使用 vm.$nextTick()-->
+<script src="https://unpkg.com/vue"></script>
+
+<script type="text/javascript">
+    // 单选按钮, 初步使用watch
+    new Vue({
+        el: '#app1',
+        data: {
+            picked: 'B',
+        },
+        watch: {
+            'picked': function ()
+            {
+                console.log(this.picked)
+            },
+        },
+    })
+</script>
+</body>
+</html>

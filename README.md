@@ -10,3 +10,5 @@
 **t4.html** [https://jsfiddle.net/vini123/ycjepnuL/](https://jsfiddle.net/vini123/ycjepnuL/)
 
 **t5.html** [https://jsfiddle.net/vini123/fdg7uqL0/](https://jsfiddle.net/vini123/fdg7uqL0/)
+
+**t6.html** [https://jsfiddle.net/vini123/1nLuroyr/](https://jsfiddle.net/vini123/1nLuroyr/)

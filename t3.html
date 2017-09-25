@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>被挂载到dom钩子</title>
+	<style>
+		.sese {
+			background-color: rgba(0, 188, 188, 0.6);
+			padding: 4px 8px;
+			display: inline-block;
+			list-style: none;
+			color: #fff;
+			border-radius: 4px;
+			margin-right: 5px;
+		}
+
+		.btn {
+			background-color: rgba(188, 0, 188, 0.6);
+			cursor: pointer;
+			margin-left: 40px;
+		}
+	</style>
+</head>
+<body>
+
+<div id="app1">
+	<ol>
+		<li class="sese" v-bind:title="say(todo.text)" v-for="todo in todos">{{todo.text}}</li>
+	</ol>
+</div>
+
+<!-- 被挂载到dom钩子。如果想整个视图都渲染完毕，请继续使用 vm.$nextTick()-->
+<script src="https://unpkg.com/vue"></script>
+
+<script type="text/javascript">
+    // https://cn.vuejs.org/v2/api/#mounted
+
+    var vm1 = new Vue({
+        el: "#app1",
+        data: {
+            todos: []
+        },
+        mounted: function() {
+            this.$nextTick(function() {
+                this.todos = [{
+                    text: "海上生明月"
+                }, {
+                    text: "天涯共此时"
+                }, {
+                    text: "情人怨遥夜"
+                }, {
+                    text: "竟夕起相思"
+                }]
+            });
+        },
+        methods: {
+            say: function(value) {
+                console.log(value);
+                return " - " + value;
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

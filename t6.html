@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>vue 选择列表，多选，单选</title>
+	<style>
+		span {
+			display: block;
+			margin: 12px 0;
+		}
+
+		div {
+			margin: 12px 0;
+		}
+
+		select {
+			padding: 3px 5px
+		}
+	</style>
+</head>
+<body>
+
+<div id="app1">
+	<select v-model="selected">
+		<option disabled="false" value="">请选择</option>
+		<option>A</option>
+		<option>B</option>
+		<option>C</option>
+	</select>
+	<span>{{selected}}</span>
+</div>
+
+<div id="app2">
+	<select v-model="selected" multiple>
+		<option>A</option>
+		<option>B</option>
+		<option>C</option>
+		<option>D</option>
+	</select>
+	<span v-text="selected"></span>
+</div>
+
+<div id="app3">
+	<select v-model="selected">
+		<option v-for="option in options" v-text="option.name"></option>
+	</select>
+	<span v-text="selected"></span>
+</div>
+
+<script src="https://unpkg.com/vue"></script>
+
+<script type="text/javascript">
+    // 选择列表，多选，单选
+    new Vue({
+        el: '#app1',
+        data: {
+            selected: '',
+        },
+    })
+
+    new Vue({
+        data: {
+            selected: [],
+        },
+    }).$mount('#app2')
+
+    new Vue({
+        el: '#app3',
+        data: {
+            selected: '侬今葬花人笑痴',
+            options: [
+                {name: '尔今死去侬收葬'},
+                {name: '未卜侬身何日丧'},
+                {name: '侬今葬花人笑痴'},
+                {name: '他日葬侬知是谁'}],
+        },
+        components: {
+            'op-item': {
+                props: ['item'],
+                template: '<option>{{item}}</option>',
+            },
+        },
+    })
+
+</script>
+</body>
+</html>

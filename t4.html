@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>vue 模板的使用</title>
+</head>
+<body>
+
+<div id="app1">
+	<t-t1 v-bind:todo="data"></t-t1>
+</div>
+
+<div id="app2">
+	<ol>
+		<t-t2 v-for="item in list" v-bind:todo="item"></t-t2>
+	</ol>
+</div>
+
+<!-- 被挂载到dom钩子。如果想整个视图都渲染完毕，请继续使用 vm.$nextTick()-->
+<script src="https://unpkg.com/vue"></script>
+
+<script type="text/javascript">
+    // https://cn.vuejs.org/v2/api/#Vue-component
+    //模板
+    //全局模板，直接用Vue。局部模板直接在实例中。
+    //无论是全局模板还是局部模板，在定义模板的地方，都需要bind数据，然后在实现模板那props上。用以解耦。
+    //全局模板用component函数，局部模板用components。
+
+    Vue.component("t-t1", {
+        props: ["todo"],
+        template: "<span>{{todo.text}} ?</span>"
+    });
+
+    var vm1 = new Vue({
+        el: "#app1",
+        data: {
+            data: {
+                text: "神奇动物在哪里"
+            }
+        }
+    });
+
+    var vm2 = new Vue({
+        el: "#app2",
+        data: {
+            list: [{
+                name: "php"
+            }, {
+                name: "python"
+            }, {
+                name: "node.js"
+            }, {
+                name: "java"
+            }]
+        },
+        components: {
+            "t-t2": {
+                props: ["todo"],
+                template: "<li>{{todo.name}}</li>"
+            }
+        }
+    });
+</script>
+</body>
+</html>

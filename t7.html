@@ -4,42 +4,134 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>vue checkbox</title>
+	<title>vue 函数，事件，绑定</title>
 	<style>
-		span {
-			display: block;
-			margin: 12px 0;
-		}
-
-		div {
-			margin: 12px 0;
-		}
 
 		input {
-			margin: 0 3px 0 20px;
+			display: block;
+			width: 240px;
+			padding: 0.8em;
+			margin: 20px;
+			border: none;
+			outline: medium;
+			border-radius: 5px;
+			color: #fff;
+			background: #f06bd4;
+			font-size: 15px;
+			font-weight: bold;
+			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		}
+
+		input:-ms-input-placeholder {
+			color: #ddd;
+		}
+
+		/* Internet Explorer 10+ */
+		input::-webkit-input-placeholder {
+			color: #ddd;
+		}
+
+		/* WebKit browsers */
+		input::-moz-placeholder {
+			color: #ddd;
+		}
+
+		/* Mozilla Firefox 4 to 18 */
+		input:-moz-placeholder {
+			color: #ddd;
+		}
+
+		/* Mozilla Firefox 19+ */
+
+		input:focus {
+			border: none;
+		}
+
+		ol {
+			list-style-type: none;
+			list-style: none;
+			padding: 0;
+			margin-left: 20px;
+		}
+
+		li {
+			display: block;
+			width: 240px;
+			height: 30px;
+			line-height: 30px;
+			border-radius: 5px;
+			padding: 0 12px;
+			margin: 5px 0;
+			list-style: none;
+			list-style-type: none;
+			background: #f06bd4;
+			color: #fff;
+		}
+
+		li span {
+			max-width: 180px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		li .close {
+			float: right;
+			width: 15px;
+			height: 15px;
+			margin: 7px 2px;
+			cursor: pointer;
+			background-image: url(data:image/gif;base64,R0lGODlhDwAPAJEAAP71+PN9lf///wAAACH5BAEHAAIALAAAAAAPAA8AAAInjI8ZwO1twHpQzvkuxmzz7UShlHEdJVZmSp4QOHYX1UbmyNKywgcFADs=);
 		}
 	</style>
 </head>
 <body>
 <div id="app1">
-	<input type="checkbox" value="神" v-model="checks"/>神
-	<input type="checkbox" value="魔" v-model="checks"/>魔
-	<input type="checkbox" value="仙" v-model="checks"/>仙
-	<input type="checkbox" value="妖怪" v-model="checks"/>妖怪
+	<input type="text" :placeholder="placeholder" v-model="inputMsg" v-on:keyup.enter="addItem">
+	<span style="display:block;margin:35px 0 -5px 20px;" v-text="question"></span>
+	<ol>
+		<list-item v-for="(item, index) in list" v-bind:item="item" :key="index"
+				   v-on:remove="list.splice(index,1)"></list-item>
+	</ol>
 </div>
 
 <script src="https://unpkg.com/vue"></script>
 
 <script type="text/javascript">
+
+    // 1. v-model 实现数据的双向绑定。改变input的value也会改变其绑定的数据，同样，改变绑定的数据，也会改变input的value。
+
+    // 2. v-on 绑定事件监听器。同时注意修饰符的使用。
+
+    // 3. 模板的使用。模板注意props，注意key。
+
+    // 4. emit 触发当前实例上的事件。
+
     new Vue({
         el: '#app1',
         data: {
-            checks: ['魔', '仙'],
+            placeholder: '请输入想添加的内容,回车',
+            inputMsg: '',
+            question: '你能把这首诗填完吗？',
+            list: [
+                {text: '海上生明月'},
+                {text: '天涯共此时'}],
         },
-        watch: {
-            'checks': function ()
+        methods: {
+            'addItem': function ()
             {
-                console.log(this.checks)
+                if (!this.inputMsg)
+                    return
+
+                this.list.push({text: this.inputMsg})
+                this.inputMsg = ''
+            },
+        },
+        components: {
+            'list-item': {
+                props: ['item'],
+                template: '<li><span>{{item.text}}</span> <span class='
+                close' v-on:click=\'$emit("remove")\'></span></li>',
             },
         },
     })

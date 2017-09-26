@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>vue 动态的添加data，class的使用</title>
+	<style>
+		span {
+			margin: 10px;
+			padding: 5px 8px;
+			background-color: rgba(0, 188, 188, 0.6);
+			border-radius: 4px;
+			color: #fff;
+			font-size: 14px;
+			cursor: pointer;
+		}
+
+		.change {
+			background-color: rgba(0, 188, 0, 0.6)
+		}
+	</style>
+</head>
+<body>
+
+<div id="app1">
+	<span :title="userinfo.nickname" v-bind:class="{change:userinfo.isChanged}" v-on:click="runChange">{{userinfo.nickname}}</span>
+	<span v-bind:title="title" v-text="message" @click="runMessage"></span>
+</div>
+
+<script src="https://unpkg.com/vue"></script>
+<script type="text/javascript">
+    // 1. v-bind简写。如 v-bind:title 简写成 :title。还有div内属性。比如img的src，div的name这些，只能通过v-bind来实现，不能仅仅通过{{}} 来实现。
+
+    // 2. v-on也可以简写。 如 v-on:click 简写成 @click
+
+    // 3.绑定的clas不会覆盖之前的class，只会是追加。通常将class的add和remove和数据挂钩。从而数据驱动dom。
+    //  class名, : true or false
+
+    // 4. vue对没有定义的属性是没法去渲染的。所以如果对象没有的属性，应该用set方法，去添加属性。set方法有全局和局部的。全局直接Vue.set(对象, 属性, 值);局部的 this.$set(对象, 属性, 值);
+
+    let vm1 = new Vue({
+        el: '#app1',
+        data: {
+            'title': '给我一个理由忘记',
+            'message': '仿佛有痛楚',
+            'userinfo': {
+                'nickname': '七月羽歌',
+                'gender': '男',
+                'age': 32,
+            },
+        },
+        methods: {
+            'runChange': function ()
+            {
+                if ((typeof this.userinfo.isChanged) == 'undefined')
+                {
+                    this.$set(this.userinfo, 'isChanged', true)
+                } else
+                {
+                    this.userinfo.isChanged = !this.userinfo.isChanged
+                }
+            },
+            'runMessage': function ()
+            {
+                var arr = ['海上生明月', '天涯共此时', '情人怨遥夜', '竟夕起相思', '灭烛怜光满', '披衣觉露滋', '不堪盈手赠', '还寝梦佳期']
+                this.message = arr[Math.floor(Math.random() * arr.length)]
+            },
+        },
+    })
+</script>
+</body>
+</html>

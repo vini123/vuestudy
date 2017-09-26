@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>vue 属性的set，get， computed的使用</title>
+	<style>
+		span {
+			display: block;
+			width: 200px;
+			border-radius: 5px;
+			background-color: #f00;
+			color: #fff;
+			height: 30px;
+			line-height: 30px;
+			margin: 8px;
+			padding: 0 8px;
+		}
+	</style>
+</head>
+<body>
+
+<div id="app1">
+	<span v-for="item in logs" v-text="item"></span>
+</div>
+
+<script src="https://unpkg.com/vue"></script>
+<script type="text/javascript">
+
+    // 生命周期(mounted,nexttick)，属性的set，get， computed会缓存数据
+    // https://cn.vuejs.org/v2/api/#computed
+    // https://cn.vuejs.org/v2/guide/computed.html#计算属性-vs-被观察的属性
+    // 注意，computed中定义的是计算属性（默认只是get，当然可以定义set），methods中定义的是方法
+
+    let vm1 = new Vue({
+        el: '#app1',
+        data: {
+            love: '',
+            logs: [],
+        },
+        mounted: function ()
+        {
+            this.$nextTick(function ()
+            {
+                this.log(this.userinfo)
+                this.log(this.lover)
+                this.lover = 'zy'
+                this.log(this.lover)
+                this.userinfo = '神奇动物在哪里'
+                this.log(this.userinfo)
+            })
+        },
+        methods: {
+            log: function (value)
+            {
+                this.logs.push(value)
+            },
+        },
+        computed: {
+            userinfo: function ()
+            {
+                return 'userinfo'
+            },
+            lover: {
+                set: function (value)
+                {
+                    this.love = value
+                },
+                get: function ()
+                {
+                    return this.love
+                },
+            },
+        },
+    })
+
+</script>
+</body>
+</html>
